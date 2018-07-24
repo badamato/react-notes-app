@@ -9,6 +9,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+        selectedId: -1,
         notes: [
           {
             id: 1001,
@@ -37,14 +38,25 @@ class App extends React.Component {
         <DocumentList allNotes={this.state.notes} 
         handleSelection={this._selectNote} />
 
-        <DocumentEditor note={this.state.notes[0]}/>
+        <DocumentEditor note={this._getSelectedNote()}/>
       </div>
     );
   }
 
+  _getSelectedNote = () => {
+    let theNote = this.state.notes.find(note => note.id === this.state.selectedId);
+    if (!theNote) {
+      theNote = this.state.notes[0];
+    }
+    return theNote;
+  }
 
   _selectNote = (noteId) => {
     console.log(noteId);
+
+    this.setState({
+      selectedId: noteId
+    });
   }
 
 }
