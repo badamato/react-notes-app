@@ -1,17 +1,18 @@
 import React from 'react';
+import DocumentList from './DocumentList';
+import SearchBar from './SearchBar';
+import DocumentEditor from './DocumentEditor';
 
 
 class App extends React.Component {
   render() {
     return (
       <div className="notes-app">
-        <header className="search-bar">
-        <h1>React Notes App</h1>
-        <input type="text" />
-        </header>
+        <SearchBar />
 
-        
-        <div className="document-list"></div>
+        <DocumentList />
+
+        <DocumentEditor />
       </div>
     );
   }
