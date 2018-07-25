@@ -9,6 +9,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+        searchText: '',
         selectedId: -1,
         notes: [
           {
@@ -33,14 +34,16 @@ class App extends React.Component {
   render() {
     return (
       <div className="notes-app">
-        <SearchBar />
+        <SearchBar text={this.state.searchText}
+        handleChange={this._updateSearchText}
+        />
 
         <DocumentList allNotes={this.state.notes} 
-        handleSelection={this._selectNote} />
+        handleSelection={this._selectNote} 
+        />
 
         <DocumentEditor note={this._getSelectedNote()}
         handleChange={this._updateNote}
-        
         />
       </div>
     );
@@ -49,6 +52,12 @@ class App extends React.Component {
   componentDidMount() {
     this.setState({
       selectedId: this.state.notes[0].id
+    });
+  }
+
+  _updateSearchText = (newSearchText) => {
+    this.setState({
+      searchText: newSearchText
     });
   }
 
