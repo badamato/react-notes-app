@@ -68,9 +68,10 @@ class App extends React.Component {
       content:  noteContent
     };
 
+
     let notesArrayWithUpdatednote = [
-      ...this._allNotesExceptSelectedNote(),
-      updatedNote
+      updatedNote,
+      ...this._allNotesExceptSelectedNote()
     ];
 
     //set the state
