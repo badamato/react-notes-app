@@ -43,6 +43,37 @@ class App extends React.Component {
     );
   }
 
+  _updateNote = (noteContent) => {
+    //grab existing note
+    let theNote = this._getSelectedNote();
+
+    //make a copy and update the copy
+
+    //version 1: object.assign
+    // let updatedNote = Object.assign({}, theNote);
+    // updatedNote.content = noteContent;
+
+    //version 2: sprinkles! (object spread)
+    let updatedNote = {
+      ...theNote,
+      content:  noteContent
+    };
+
+    let notesArrayWithUpdatednote = [
+      ...this._allNotesExceptSelectedNote(),
+      updatedNote
+    ];
+    //set the state
+    
+
+
+  }
+
+  _allNotesExceptSelectedNote = () => {
+    let notesWithoutSelectedNote = this.state.notes.filter(note => note.id !== this.state.selectedId);
+    return notesWithoutSelectedNote;
+  }
+
   _getSelectedNote = () => {
     let theNote = this.state.notes.find(note => note.id === this.state.selectedId);
     if (!theNote) {
