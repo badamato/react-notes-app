@@ -5,7 +5,11 @@ class DocumentEditor extends React.Component {
         return(
             <div className="document-editor">
             <textarea 
-            value={this.props.note.content} /></div>
+            value={this.props.note.content} 
+            onChange={(e) => {
+                this.props.handleChange(e.target.value)
+            }}
+            /></div>
         );
     }
 }

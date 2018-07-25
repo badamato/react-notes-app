@@ -38,9 +38,18 @@ class App extends React.Component {
         <DocumentList allNotes={this.state.notes} 
         handleSelection={this._selectNote} />
 
-        <DocumentEditor note={this._getSelectedNote()}/>
+        <DocumentEditor note={this._getSelectedNote()}
+        handleChange={this._updateNote}
+        
+        />
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.setState({
+      selectedId: this.state.notes[0].id
+    });
   }
 
   _updateNote = (noteContent) => {
@@ -63,13 +72,19 @@ class App extends React.Component {
       ...this._allNotesExceptSelectedNote(),
       updatedNote
     ];
-    //set the state
-    
 
+    //set the state
+    this.setState({
+      notes: notesArrayWithUpdatednote
+    });
 
   }
 
   _allNotesExceptSelectedNote = () => {
+    let selectedId = this.state.selectedId;
+    if (selectedId === -1) {
+      selectedId = this.state.notes[0].id;
+    }
     let notesWithoutSelectedNote = this.state.notes.filter(note => note.id !== this.state.selectedId);
     return notesWithoutSelectedNote;
   }
