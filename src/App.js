@@ -22,8 +22,20 @@ class App extends React.Component {
           {
             id: 1002,
             timestamp: new Date(),
-            title: "Larry.  He is a jokester!",
+            title: "Larry.  He is a jokester",
             content: "woooohoooooo!"
+          },
+          {
+            id: 1003,
+            timestamp: new Date(),
+            title: "Gail. Who likes Gail?!",
+            content: "barf"
+          },
+          {
+            id: 1004,
+            timestamp: new Date(),
+            title: "Redux",
+            content: "React could work - but not now"
           }
         ]
 
@@ -34,15 +46,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="notes-app">
-        <SearchBar text={this.state.searchText}
+        <SearchBar 
+        text={this.state.searchText}
         handleChange={this._updateSearchText}
         />
 
-        <DocumentList allNotes={this.state.notes} 
+        <DocumentList 
+        allNotes={this._getFilteredNotes()} 
         handleSelection={this._selectNote} 
         />
 
-        <DocumentEditor note={this._getSelectedNote()}
+        <DocumentEditor 
+        note={this._getSelectedNote()}
         handleChange={this._updateNote}
         />
       </div>
@@ -95,8 +110,28 @@ class App extends React.Component {
     if (selectedId === -1) {
       selectedId = this.state.notes[0].id;
     }
+
     let notesWithoutSelectedNote = this.state.notes.filter(note => note.id !== this.state.selectedId);
     return notesWithoutSelectedNote;
+  }
+
+  _getFilteredNotes = () => {
+    //is there any search text?
+    if (this.state.searchText !== '') {
+      //if so, filter the list
+      let filteredNotes = this.state.notes.filter(note => {
+        let doesTitleMatch = note.title.toLowerCase().includes(this.state.searchText.toLowerCase());
+
+
+        let doesContentMatch = note.content.toLowerCase().includes(this.state.searchText.toLowerCase());
+
+        return doesTitleMatch || doesContentMatch;
+      });
+      return filteredNotes;
+    } else {
+      //if not, return all the notes
+      return this.state.notes;
+    }
   }
 
   _getSelectedNote = () => {
